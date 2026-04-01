@@ -4,6 +4,7 @@ This prototype focuses on UI + inference flow for student project review.
 """
 
 import cv2
+import numpy as np
 import streamlit as st
 
 from model import load_trained_model

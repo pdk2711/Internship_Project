@@ -1,13 +1,14 @@
 # Real-Time Indian Sign Language Recognition (Prototype)
 
-A minimal working demo for student project review.
+A **minimal working demo** for student project review.
 
-## What this project includes
+This project demonstrates a simple pipeline:
 
-- Real-time webcam UI using Streamlit + OpenCV.
-- CNN model definition using TensorFlow/Keras.
-- Training script for the Kaggle Indian Sign Language dataset.
-- Safe fallback behavior: if model is missing, app uses random A-Z predictions.
+1. Capture webcam frame using OpenCV
+2. Preprocess frame (`64x64`, normalized)
+3. Run prediction using a loaded TensorFlow/Keras `.h5` model (if available)
+4. Fallback to random alphabet prediction (`A-Z`) if no trained model exists
+5. Display live feed + predicted alphabet in Streamlit UI
 
 ---
 
@@ -17,7 +18,6 @@ A minimal working demo for student project review.
 .
 ├── app.py             # Streamlit UI + webcam inference loop
 ├── model.py           # CNN architecture + model save/load helpers
-├── train.py           # Dataset loading + training pipeline
 ├── utils.py           # Preprocessing + prediction + dummy fallback
 ├── requirements.txt   # Dependencies
 └── README.md
@@ -31,46 +31,27 @@ A minimal working demo for student project review.
 pip install -r requirements.txt
 ```
 
----
-
-## 1) Download dataset (Kaggle)
-
-Dataset: https://www.kaggle.com/datasets/soumyakushwaha/indian-sign-language-dataset
-
-After downloading/unzipping, keep folder structure like:
+(Optional) create and save an untrained model structure:
 
 ```bash
-data/
-  A/
-  B/
-  ...
-  Z/
+python model.py
 ```
+
+This saves `isl_model_structure.h5`.
 
 ---
 
-## 2) Train the CNN
-
-```bash
-python train.py --data-dir data --epochs 8 --output-model isl_model.h5
-```
-
-This will train a small CNN and save `isl_model.h5`.
-
----
-
-## 3) Run live demo
+## Run
 
 ```bash
 streamlit run app.py
 ```
 
-In the sidebar, keep model path as `isl_model.h5` (or set your custom path).
-
 ---
 
 ## Notes
 
-- This is a prototype for demo/review, not production-grade accuracy.
-- If model file is not present, the app still runs with placeholder random predictions.
-- Webcam permission is required for live feed.
+- This is **not a production model**.
+- The CNN is defined but not trained in this prototype.
+- If a valid trained `.h5` is not found, the app still runs and shows placeholder random predictions.
+- For demo use, provide webcam permission to your system/browser.
